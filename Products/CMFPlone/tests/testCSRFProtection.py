@@ -66,8 +66,8 @@ class AuthenticatorTestCase(PloneTestCase):
     def test_RegistrationTool_editMember(self):
         self.checkAuthenticator(
             '/portal_registration/editMember',
-            'member_id=%s&password=y0d4Wg&properties.foo:record='
-                    % TEST_USER_ID)
+            'member_id=%s&password=y0d4Wg&properties.foo:record=' % (
+                TEST_USER_ID))
 
     def test_MembershipTool_setPassword(self):
         self.checkAuthenticator(
