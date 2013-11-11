@@ -8,6 +8,10 @@ Changelog
 5.0a1 (unreleased)
 ------------------
 
+- Make Plone tool read the exposeDCMetaTags from p.a.registry instead of
+  of the site properties.
+  [timo]
+
 - Remove the plone_deprecated skin layer.
   [gforcada, davisagli]
 
