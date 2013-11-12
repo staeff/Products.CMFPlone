@@ -60,8 +60,6 @@
            class="Products.CMFUid.UniqueIdHandlerTool.UniqueIdHandlerTool"/>
  <required tool_id="portal_diff"
            class="Products.CMFDiffTool.CMFDiffTool.CMFDiffTool"/>
- <required tool_id="portal_url"
-           class="Products.CMFPlone.URLTool.URLTool"/>
  <required tool_id="portal_view_customizations"
            class="plone.app.customerize.tool.ViewTemplateContainer"/>
  <required tool_id="portal_workflow"
