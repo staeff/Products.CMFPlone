@@ -40,7 +40,8 @@ class TestURLTool(unittest.TestCase):
     def _makeOne(self, *args, **kw):
         from Products.CMFPlone.URLTool import URLTool
         url_tool = URLTool(*args, **kw)
-        return url_tool.__of__(self.site)
+        url_tool._portal = self.site  # load dependency for test
+        return url_tool
 
     def test_isURLInPortal(self):
         url_tool = self._makeOne()
