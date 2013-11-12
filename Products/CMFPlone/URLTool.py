@@ -1,21 +1,82 @@
-from Products.CMFCore.URLTool import URLTool as BaseTool
-from Products.CMFCore.utils import getToolByName
+#from Products.CMFCore.URLTool import URLTool as BaseTool
+from Products.CMFCore.utils import getToolByName, registerToolInterface
 from AccessControl import ClassSecurityInfo
 from App.class_init import InitializeClass
-from Products.CMFPlone.PloneBaseTool import PloneBaseTool
+#from Products.CMFPlone.PloneBaseTool import PloneBaseTool
 
 from posixpath import normpath
 from urlparse import urlparse, urljoin
 import re
+from Products.CMFCore.interfaces._tools import IURLTool
+from zope import interface
+from Products.Five.browser import BrowserView
+from plone import api
+import logging;
+from OFS.SimpleItem import SimpleItem
+from zope.component.hooks import getSite
+from Products.CMFCore.interfaces._content import ISiteRoot
+from zope.interface import providedBy
+logger = logging.getLogger(__name__)
 
 
-class URLTool(PloneBaseTool, BaseTool):
-
-    meta_type = 'Plone URL Tool'
+class URLTool(object):
+    """This is the portal_url tool rewrite to be a utility"""
+    interface.implements(IURLTool)
     security = ClassSecurityInfo()
-    toolicon = 'skins/plone_images/link_icon.png'
-
+    security.declarePublic('__call__')
+    security.declarePublic('getPortalObject')
+    security.declarePublic('getRelativeContentPath')
+    security.declarePublic('getRelativeContentURL')
+    security.declarePublic('getPortalPath')
     security.declarePublic('isURLInPortal')
+    security.declarePublic('getRelativeUrl')
+
+    def __init__(self):
+        self._portal = None
+
+    def __call__(self, relative=0, *args, **kw):
+        """ Get by default the absolute URL of the portal.
+        """
+#        logger.info('__call__')
+        # XXX: this method violates the rules for tools/utilities:
+        # absolute_url() depends implicitly on REQUEST
+        return self.getPortalObject().absolute_url(relative=relative)
+
+    def getPortalObject(self):
+        """ Get the portal object itself.
+        """
+#        logger.info('getPortalObject')
+        #code ripped of plone.api because plone.api is not already parts of
+        #of the core.
+        #TODO: use plone.api.portal.get()
+        if self._portal is None:
+            closest_site = getSite()
+            if closest_site is not None:
+                for potential_portal in closest_site.aq_chain:
+                    if ISiteRoot in providedBy(potential_portal):
+                        self._portal = potential_portal
+        return self._portal
+
+    def getRelativeContentPath(self, content):
+        """ Get the path for an object, relative to the portal root.
+        """
+#        logger.info('getRelativeContentPath')
+        portal_path_length = len( self.getPortalObject().getPhysicalPath() )
+        content_path = content.getPhysicalPath()
+        return content_path[portal_path_length:]
+
+    def getRelativeContentURL(self, content):
+        """ Get the URL for an object, relative to the portal root.
+        """
+        return '/'.join( self.getRelativeContentPath(content) )
+
+    getRelativeUrl = getRelativeContentURL
+
+    def getPortalPath(self):
+        """ Get the portal object's URL without the server URL component.
+        """
+        return '/'.join( self.getPortalObject().getPhysicalPath() )
+
     def isURLInPortal(self, url, context=None):
         """ Check if a given url is on the same host and contains the portal
             path.  Used to ensure that login forms can determine relevant
@@ -62,7 +123,9 @@ class URLTool(PloneBaseTool, BaseTool):
         if host == u_host and u_path.startswith(path):
             return True
 
-        props = getToolByName(self, 'portal_properties').site_properties
+        pp = getToolByName(self.getPortalObject(),
+                              'portal_properties')
+        props = pp.site_properties
         for external_site in props.getProperty('allow_external_login_sites', []):
             _, host, path, _, _, _ = urlparse(external_site)
             if not path.endswith('/'):
@@ -72,6 +135,14 @@ class URLTool(PloneBaseTool, BaseTool):
         return False
 
 
-URLTool.__doc__ = BaseTool.__doc__
+class URLToolView(BrowserView, URLTool):
+    """Alias to let context/portal_url working"""
+    interface.implements(IURLTool)
 
-InitializeClass(URLTool)
+    def __init__(self, context, request):
+        logger.info('portal_url throw a browser view')
+        BrowserView.__init__(self, context, request)
+        URLTool.__init__(self)
+
+portal_url = URLTool()
+registerToolInterface('portal_url', IURLTool)
