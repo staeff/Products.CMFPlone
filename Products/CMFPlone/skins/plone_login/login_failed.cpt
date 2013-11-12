@@ -9,7 +9,7 @@
 <head>
     <metal:js fill-slot="javascript_head_slot">
         <script type="text/javascript" src=""
-                tal:attributes="src string:${context/portal_url}/login.js">
+                tal:attributes="src string:${context/plone_portal_state/portal_url}/login.js">
         </script>
     </metal:js>
     <metal:block fill-slot="top_slot"

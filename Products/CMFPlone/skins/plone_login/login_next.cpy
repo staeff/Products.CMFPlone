@@ -41,11 +41,11 @@ if came_from is not None:
     # portal. An added bonus: this fixes some problems with a Zope bug that
     # doesn't properly unmangle the VirtualHostMonster stuff when setting
     # ACTUAL_URL
-    if not context.portal_url.isURLInPortal(came_from):
+    if not context.restrictedTraverse('@@portal_url').isURLInPortal(came_from):
         came_from = ''
 
 if next:
-    if not context.portal_url.isURLInPortal(next):
+    if not context.restrictedTraverse('@@portal_url').isURLInPortal(next):
         came_from = next = ''
     else:
         state.set(status='external')

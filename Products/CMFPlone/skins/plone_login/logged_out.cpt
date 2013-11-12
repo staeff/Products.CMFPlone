@@ -8,7 +8,7 @@
 <head>
     <metal:js fill-slot="javascript_head_slot">
         <script type="text/javascript" src=""
-                tal:attributes="src string:${context/portal_url}/login.js">
+                tal:attributes="src string:${context/plone_portal_state/portal_url}/login.js">
         </script>
     </metal:js>
     <metal:block fill-slot="top_slot"
@@ -46,7 +46,7 @@
     <div id="content-core">
         <p i18n:translate="">
             <a i18n:name="text_logged_out_link"
-               tal:attributes="href string:${portal_url}/@@plone-root-logout"
+               tal:attributes="href string:${context/plone_portal_state/portal_url}/@@plone-root-logout"
                i18n:translate="">
                 Visit this link
             </a>

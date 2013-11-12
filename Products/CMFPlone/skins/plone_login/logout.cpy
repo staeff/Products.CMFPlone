@@ -20,7 +20,8 @@ transaction_note('Logged out')
 
 # Handle external logout requests from other portals
 next = request.get('next', None)
-if (next is not None and context.portal_url.isURLInPortal(next)):
+portal_url = context.restrictedTraverse('@@portal_url')
+if (next is not None and portal_url.isURLInPortal(next)):
     target_url = next
 else:
     target_url = request.URL1 + '/logged_out'

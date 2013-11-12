@@ -21,7 +21,7 @@ if product:
     msg = _(u'Upgraded ${product}', mapping={'product': product})
     putil.addPortalMessage(msg)
 
-purl = getToolByName(context, 'portal_url')()
+purl = context.restrictedTraverse('@@portal_url')()
 req.response.redirect(purl + '/prefs_install_products_form')
 
 return 'Redirecting ...'

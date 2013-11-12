@@ -12,7 +12,8 @@ request = context.REQUEST
 # Handle external login requests from other portals where the user is already
 # logged in in this portal
 next = request.get('next', None)
-if (next is not None and context.portal_url.isURLInPortal(next)
+portal_url = context.restrictedTraverse('@@portal_url')
+if (next is not None and portal_url.isURLInPortal(next)
     and not context.portal_membership.isAnonymousUser()):
     return context.restrictedTraverse('external_login_return')()
 

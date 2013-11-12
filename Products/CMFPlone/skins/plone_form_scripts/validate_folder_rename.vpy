@@ -13,7 +13,8 @@ from Products.CMFPlone import PloneMessageFactory as _
 paths = [path for path in paths if path]
 new_ids = [id for id in new_ids if id]
 new_titles = [title for title in new_titles]
-portal = context.portal_url.getPortalObject()
+portal_url = context.restrictedTraverse('@@portal_url')
+portal = portal_url.getPortalObject()
 check_id = context.check_id
 
 if len(paths) != len(new_ids):

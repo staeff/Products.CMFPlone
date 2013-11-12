@@ -9,7 +9,8 @@
 
 login = 'login'
 
-portal = context.portal_url.getPortalObject()
+portal_url = context.restrictedTraverse('@@portal_url')
+portal = portal_url.getPortalObject()
 # if cookie crumbler did a traverse instead of a redirect,
 # this would be the way to get the value of came_from
 #url = portal.getCurrentUrl()

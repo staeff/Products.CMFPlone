@@ -14,7 +14,8 @@
                  actions python:context.portal_actions.listActionInfos('user/join', object=context);
                  auth nocall:context/acl_users/credentials_cookie_auth|nothing;
                  came_from request/came_from|request/HTTP_REFERER|nothing;
-                 came_from python:test(context.portal_url.isURLInPortal(came_from), came_from, None);
+                 portal_url context/portal_url;
+                 came_from python:test(portal_url.isURLInPortal(came_from), came_from, None);
                  ztutils modules/ZTUtils;
                  errors options/state/getErrors;">
 

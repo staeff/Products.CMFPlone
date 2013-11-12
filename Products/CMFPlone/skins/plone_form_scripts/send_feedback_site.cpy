@@ -20,7 +20,7 @@ state_success = "success"
 state_failure = "failure"
 
 plone_utils = getToolByName(context, 'plone_utils')
-urltool = getToolByName(context, 'portal_url')
+urltool = context.restrictedTraverse('@@portal_url')
 portal = urltool.getPortalObject()
 url = urltool()
 

@@ -18,7 +18,8 @@ try:
     while not hasattr(context.aq_explicit, 'restrictedTraverse'):
         context = context.aq_parent
 except (Unauthorized, AttributeError):
-    context = context.portal_url.getPortalObject()
+    portal_url = context.restrictedTraverse('portal_url')
+    context = portal_url.getPortalObject()
 
 error_type = kwargs.get('error_type', None)
 error_message = kwargs.get('error_message', None)

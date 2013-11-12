@@ -12,7 +12,8 @@ if container.REQUEST.get('PUBLISHED') is script:
     raise Forbidden('Script may not be published.')
 
 contents = []
-portal = context.portal_url.getPortalObject()
+portal_url = context.restrictedTraverse('portal_url')
+portal = portal_url.getPortalObject()
 for path in paths:
     obj = portal.restrictedTraverse(str(path), None)
     if obj is not None:
