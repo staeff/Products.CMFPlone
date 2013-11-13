@@ -23,7 +23,6 @@ class HiddenProducts(object):
             'ATContentTypes', 'Products.ATContentTypes',
             'ATReferenceBrowserWidget', 'Products.ATReferenceBrowserWidget',
             'archetypes.referencebrowserwidget',
-            'CMFCalendar', 'Products.CMFCalendar',
             'CMFDefault', 'Products.CMFDefault',
             'CMFPlone', 'Products.CMFPlone', 'Products.CMFPlone.migrations',
             'CMFTopic', 'Products.CMFTopic',
@@ -56,7 +55,6 @@ class HiddenProducts(object):
             'plone.app.registry',
             'plone.app.search',
             'plone.app.z3cform',
-
             ]
 
 
@@ -123,21 +121,17 @@ def assignTitles(portal):
      'mimetypes_registry': 'MIME types recognized by Plone',
      'plone_utils': 'Various utility methods',
      'portal_actions': 'Contains custom tabs and buttons',
-     'portal_atct': 'Collection and image scales settings',
      'portal_calendar': 'Controls how events are shown',
      'portal_catalog': 'Indexes all content in the site',
      'portal_controlpanel': 'Registry of control panel screen',
      'portal_css': 'Registry of CSS files',
      'portal_diff': 'Settings for content version comparisions',
-     'portal_factory': 'Responsible for the creation of content objects',
-     'portal_form_controller': 'Registration of form and validation chains',
      'portal_groupdata': 'Handles properties on groups',
      'portal_groups': 'Handles group related functionality',
      'portal_javascripts': 'Registry of JavaScript files',
      'portal_languages': 'Language specific settings',
      'portal_membership': 'Handles membership policies',
      'portal_memberdata': 'Handles the available properties on members',
-     'portal_metadata': 'Controls metadata like keywords, copyrights, etc',
      'portal_migration': 'Upgrades to newer Plone versions',
      'portal_password_reset': 'Handles password retention policy',
      'portal_properties': 'General settings registry',

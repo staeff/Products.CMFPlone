@@ -1,3 +1,4 @@
+from zope.interface import Interface
 from properties import IPropertiesTool
 from properties import ISimpleItemWithProperties
 from basetool import IPloneBaseTool
@@ -15,7 +16,18 @@ from siteroot import ITestCasePloneSiteRoot
 from constrains import IConstrainTypes
 from constrains import ISelectableConstrainTypes
 from structure import INonStructuralFolder
-from factory import IFactoryTool
 from translationservice import ITranslationServiceTool
 from breadcrumbs import IHideFromBreadcrumbs
 from workflow import IWorkflowChain
+
+import pkg_resources
+try:
+    pkg_resources.get_distribution('Products.ATContentTypes')
+except pkg_resources.DistributionNotFound:
+    class IFactoryTool(Interface):
+        ''' Replacement for a needed interface
+        '''
+else:
+    from Products.ATContentTypes.interfaces import IFactoryTool
+
+IFactoryTool  # pyflakes

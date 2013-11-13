@@ -160,8 +160,16 @@ class PloneSite(CMFSite, OrderedContainer, BrowserDefaultMixin, UniqueObject):
 
     security.declareProtected(permissions.View, 'get_portal_url')
     def get_portal_url(self):
+        #TODO: add deprecation warning
         return getToolByName(self, 'portal_url')
+
     portal_url = ComputedAttribute(get_portal_url, 1)
 
+    security.declareProtected(permissions.View, 'get_portal_transforms')
+    def get_portal_transforms(self):
+        #TODO: add deprecation warning
+        return getToolByName(self, 'portal_transforms')
+
+    portal_transforms = ComputedAttribute(get_portal_transforms, 1)
 
 InitializeClass(PloneSite)

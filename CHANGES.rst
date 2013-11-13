@@ -8,8 +8,15 @@ Changelog
 5.0a1 (unreleased)
 ------------------
 
+- Remove the portal_calendar tool and the dependency on CMFCalendar.
+  [davisagli]
+
 - Remove the plone_deprecated skin layer.
   [gforcada, davisagli]
+
+- Moved archetype tools stuff from Products.CMFPlone to Products.ATContentTypes
+  (PLIP #13770)
+  [ale-rt]
 
 - Remove the portal_interface tool.
   [ale-rt]
