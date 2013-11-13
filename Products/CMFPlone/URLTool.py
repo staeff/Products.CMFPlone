@@ -7,19 +7,20 @@ from App.class_init import InitializeClass
 from posixpath import normpath
 from urlparse import urlparse, urljoin
 import re
-from Products.CMFCore.interfaces._tools import IURLTool
+from Products.CMFCore.interfaces import IURLTool
 from zope import interface
 from Products.Five.browser import BrowserView
-from plone import api
 import logging;
 from OFS.SimpleItem import SimpleItem
 from zope.component.hooks import getSite
 from Products.CMFCore.interfaces._content import ISiteRoot
 from zope.interface import providedBy
+from Acquisition.interfaces import IAcquirer
+from Acquisition import Implicit
 logger = logging.getLogger(__name__)
 
 
-class URLTool(object):
+class URLTool(Implicit):
     """This is the portal_url tool rewrite to be a utility"""
     interface.implements(IURLTool)
     security = ClassSecurityInfo()
@@ -140,9 +141,13 @@ class URLToolView(BrowserView, URLTool):
     interface.implements(IURLTool)
 
     def __init__(self, context, request):
+        #TODO: add this as deprecated
         logger.info('portal_url throw a browser view')
         BrowserView.__init__(self, context, request)
         URLTool.__init__(self)
 
 portal_url = URLTool()
 registerToolInterface('portal_url', IURLTool)
+
+InitializeClass(URLTool)
+

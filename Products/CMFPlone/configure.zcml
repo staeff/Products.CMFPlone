@@ -90,10 +90,6 @@
   <utility factory=".setuphandlers.HiddenProducts"
            name="Products.CMFPlone" />
 
-  <utility component=".URLTool.portal_url"
-           provides="Products.CMFCore.interfaces._tools.IURLTool"
-           />
-
   <!-- Adapter for default workflow lookup -->
   <adapter
       factory=".workflow.ToolWorkflowChain"
