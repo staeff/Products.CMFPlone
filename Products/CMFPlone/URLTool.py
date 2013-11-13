@@ -32,9 +32,6 @@ class URLTool(Implicit):
     security.declarePublic('isURLInPortal')
     security.declarePublic('getRelativeUrl')
 
-    def __init__(self):
-        self._portal = None
-
     def __call__(self, relative=0, *args, **kw):
         """ Get by default the absolute URL of the portal.
         """
@@ -50,13 +47,12 @@ class URLTool(Implicit):
         #code ripped of plone.api because plone.api is not already parts of
         #of the core.
         #TODO: use plone.api.portal.get()
-        if self._portal is None:
-            closest_site = getSite()
-            if closest_site is not None:
-                for potential_portal in closest_site.aq_chain:
-                    if ISiteRoot in providedBy(potential_portal):
-                        self._portal = potential_portal
-        return self._portal
+        closest_site = getSite()
+        if closest_site is not None:
+            for potential_portal in closest_site.aq_chain:
+                if ISiteRoot in providedBy(potential_portal):
+                    return potential_portal
+        raise ValueError("No portal object found")
 
     def getRelativeContentPath(self, content):
         """ Get the path for an object, relative to the portal root.
