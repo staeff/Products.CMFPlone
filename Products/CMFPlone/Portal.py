@@ -1,3 +1,5 @@
+from ComputedAttribute import ComputedAttribute
+
 from Products.CMFDefault.Portal import CMFSite
 
 from Products.CMFCore import permissions
@@ -155,5 +157,11 @@ class PloneSite(CMFSite, OrderedContainer, BrowserDefaultMixin, UniqueObject):
 
     def reindexObjectSecurity(self, skip_self=False):
         pass
+
+    security.declareProtected(permissions.View, 'get_portal_transforms')
+    def get_portal_transforms(self):
+        return getToolByName(self, 'portal_transforms')
+
+    portal_transforms = ComputedAttribute(get_portal_transforms, 1)
 
 InitializeClass(PloneSite)
