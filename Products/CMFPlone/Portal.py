@@ -160,7 +160,7 @@ class PloneSite(CMFSite, OrderedContainer, BrowserDefaultMixin, UniqueObject):
 
     security.declareProtected(permissions.View, 'get_portal_transforms')
     def get_portal_transforms(self):
-        return getToolByName('portal_transforms')
+        return getToolByName(self, 'portal_transforms')
 
     portal_transforms = ComputedAttribute(get_portal_transforms, 1)
 
