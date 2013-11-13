@@ -14,6 +14,11 @@ Changelog
 - Remove the plone_deprecated skin layer.
   [gforcada, davisagli]
 
+
+- Moved Products.CMFFormController dependency
+  from Products.CMFPlone to Products.ATContentTypes (PLIP #13770)
+  [ale-rt]
+
 - Moved archetype tools stuff from Products.CMFPlone to Products.ATContentTypes
   (PLIP #13770)
   [ale-rt]
