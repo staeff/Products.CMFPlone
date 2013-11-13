@@ -15,7 +15,7 @@ from Products.PythonScripts.standard import url_quote_plus
 from Products.PythonScripts.standard import html_quote
 
 ploneUtils = getToolByName(context, 'plone_utils')
-portal_url = context.restrictedTraverse('@@portal_url')()
+portal_url = getToolByName(context, 'portal_url')()
 pretty_title_or_id = ploneUtils.pretty_title_or_id
 plone_view = context.restrictedTraverse('@@plone')
 portal_state = context.restrictedTraverse('@@plone_portal_state')

@@ -18,7 +18,7 @@ from ZODB.POSException import ConflictError
 
 plone_utils = getToolByName(context, 'plone_utils')
 mtool = getToolByName(context, 'portal_membership')
-site = context.restrictedTraverse('@@portal_url').getPortalObject()
+site = getToolByName(context, 'portal_url').getPortalObject()
 pretty_title_or_id = plone_utils.pretty_title_or_id
 
 if not mtool.checkPermission(AllowSendto, context):

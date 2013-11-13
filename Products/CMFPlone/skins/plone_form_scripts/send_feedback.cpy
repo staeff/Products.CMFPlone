@@ -21,7 +21,7 @@ state_failure = "failure"
 
 plone_utils = getToolByName(context, 'plone_utils')
 mtool = getToolByName(context, 'portal_membership')
-urltool = context.restrictedTraverse('@@portal_url')
+urltool = getToolByName(context, 'portal_url')
 portal = urltool.getPortalObject()
 
 ## make these arguments?

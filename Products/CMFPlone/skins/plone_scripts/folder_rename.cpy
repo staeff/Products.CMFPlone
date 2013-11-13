@@ -10,8 +10,8 @@
 
 from Products.CMFPlone import PloneMessageFactory as _
 from Products.PythonScripts.standard import url_unquote
-portal_url = context.restrictedTraverse('portal_url')
-portal = portal_url.getPortalObject()
+
+portal = context.portal_url.getPortalObject()
 request = context.REQUEST
 
 message = None
@@ -22,6 +22,7 @@ change_template = paths and orig_template is not None
 if change_template:
     # We were called by 'object_rename'.  So now we take care that the
     # user is redirected to the object with the new id.
+    portal = context.portal_url.getPortalObject()
     obj = portal.restrictedTraverse(paths[0])
     new_id = new_ids[0]
     obid = obj.getId()

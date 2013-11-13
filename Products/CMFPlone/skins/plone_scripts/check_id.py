@@ -178,7 +178,7 @@ if checkForCollision:
     # parent path, including the portal root.
 
     if id != 'index_html':  # always allow index_html
-        portal = context.restrictedTraverse('@@portal_url').getPortalObject()
+        portal = context.portal_url.getPortalObject()
         if id not in portal.contentIds():  # can override root *content*
             try:
                 # it is allowed to give an object the same id as another
