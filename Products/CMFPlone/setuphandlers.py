@@ -20,7 +20,6 @@ class HiddenProducts(object):
     def getNonInstallableProducts(self):
         return [
             'Archetypes', 'Products.Archetypes',
-            'ATContentTypes', 'Products.ATContentTypes',
             'ATReferenceBrowserWidget', 'Products.ATReferenceBrowserWidget',
             'archetypes.referencebrowserwidget',
             'CMFDefault', 'Products.CMFDefault',
@@ -51,7 +50,6 @@ class HiddenProducts(object):
             'plone.app.folder',
             'plone.app.imaging',
             'plone.outputfilters',
-            'plonetheme.sunburst',
             'plone.app.registry',
             'plone.app.search',
             'plone.app.z3cform',
