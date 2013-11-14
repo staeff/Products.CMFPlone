@@ -50,5 +50,8 @@
   <utility
      interface="zope.ramcache.interfaces.ram.IRAMCache"
      factory="zope.ramcache.ram.RAMCache"/>
+  <utility
+     interface="Products.CMFCore.interfaces.IURLTool"
+     factory="Products.CMFPlone.URLTool.URLTool"/>
  </utilities>
 </componentregistry>

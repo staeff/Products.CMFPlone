@@ -69,6 +69,14 @@
 
   <browser:page
       for="*"
+      name="portal_url"
+      class="Products.CMFPlone.URLTool.URLToolView"
+      permission="zope.Public"
+      allowed_interface="Products.CMFCore.interfaces._tools.IURLTool"
+      />
+
+  <browser:page
+      for="*"
       name="sitemap"
       class=".sitemap.SitemapView"
       template="templates/sitemap.pt"

@@ -5,6 +5,7 @@ from Products.CMFCore.tests.base.dummy import DummyFolder
 from Products.CMFCore.tests.base.dummy import DummyContent
 
 from Acquisition import aq_parent
+from zope.component.hooks import setSite
 
 
 class DummyFolder(DummyFolder):
@@ -36,11 +37,14 @@ class TestURLTool(unittest.TestCase):
         self.site.portal_properties = DummyProperties(id='portal_properties')
         self.site.portal_properties.site_properties = \
             DummyProperties(id='site_properties')
+        #make the dummy site being a site manager so urltool is working
+        setSite(self.site)
+        self.site.aq_chain = [self.site]
 
     def _makeOne(self, *args, **kw):
         from Products.CMFPlone.URLTool import URLTool
         url_tool = URLTool(*args, **kw)
-        return url_tool.__of__(self.site)
+        return url_tool
 
     def test_isURLInPortal(self):
         url_tool = self._makeOne()

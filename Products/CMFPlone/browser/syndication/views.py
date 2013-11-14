@@ -21,6 +21,9 @@ class FeedView(BrowserView):
         return f
 
     def __call__(self):
+        self.portal_state = getMultiAdapter((self.context, self.request),
+                                            name=u'plone_portal_state')
+        self.site_url = self.portal_state.portal_url()
         util = getMultiAdapter((self.context, self.request),
                                name='syndication-util')
         if util.context_enabled(raise404=True):
