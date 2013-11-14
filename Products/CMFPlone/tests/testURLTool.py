@@ -6,6 +6,13 @@ from Products.CMFCore.tests.base.dummy import DummyContent
 
 from Acquisition import aq_parent
 from zope.component.hooks import setSite
+from zope.component import getSiteManager
+
+
+class DummySite(DummySite):
+
+    def getSiteManager(self):
+        return getSiteManager()
 
 
 class DummyFolder(DummyFolder):
