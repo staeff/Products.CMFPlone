@@ -21,7 +21,7 @@ from Products.CMFPlone.QuickInstallerTool import QuickInstallerTool
 from Products.CMFPlone.RegistrationTool import RegistrationTool
 from Products.CMFPlone.SkinsTool import SkinsTool
 from Products.CMFPlone.TypesTool import TypesTool
-from Products.CMFPlone.URLTool import URLTool
+from Products.CMFPlone.URLTool import URLUtility
 from Products.CMFPlone.WorkflowTool import WorkflowTool
 
 
@@ -267,7 +267,7 @@ testClasses = [
     (RegistrationTool, ()),
     (SkinsTool, ()),
     (TypesTool, ()),
-    (URLTool, ()),
+    (URLUtility, ()),
     (WorkflowTool, ()),
 ]
 

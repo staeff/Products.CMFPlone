@@ -20,7 +20,7 @@ from Acquisition import Implicit
 logger = logging.getLogger(__name__)
 
 
-class URLTool(Implicit):
+class URLUtility(Implicit):
     """This is the portal_url tool rewrite to be a utility"""
     interface.implements(IURLTool)
     security = ClassSecurityInfo()
@@ -132,7 +132,7 @@ class URLTool(Implicit):
         return False
 
 
-class URLToolView(BrowserView, URLTool):
+class URLToolView(BrowserView, URLUtility):
     """Alias to let context/portal_url working"""
     interface.implements(IURLTool)
 
@@ -142,8 +142,8 @@ class URLToolView(BrowserView, URLTool):
         BrowserView.__init__(self, context, request)
         URLTool.__init__(self)
 
-portal_url = URLTool()
+portal_url = URLUtility()
 registerToolInterface('portal_url', IURLTool)
 
-InitializeClass(URLTool)
+InitializeClass(URLUtility)
 
