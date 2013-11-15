@@ -102,7 +102,6 @@ class TestSiteAdministratorRole(PloneTestCase.PloneTestCase):
             'Add ZODB Mount Points':                                    0,
             'Add plone.app.customerizes':                               0,
             'Add portal content':                                       1,
-            'Add portal events':                                        1,
             'Add portal folders':                                       1,
             'Add portal member':                                        1,
             'Add portal topics':                                        1,
