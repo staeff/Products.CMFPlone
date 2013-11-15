@@ -45,16 +45,13 @@ ClassDirective.require = require
 # This is an unusual sort of monkey patching...we replace just the func_code
 # rather than the entire function, to make sure that aliases to the function
 # that were imported prior to this patch will still run the patched code.
-import pkg_resources
-try:
-    pkg_resources.get_distribution('Products.ATContentTypes')
-except pkg_resources.DistributionNotFound:
-    pass
-else:
-    code = """
+code = """
 from persistent.interfaces import IPersistent
 from OFS.interfaces import IItem
-from Products.ATContentTypes.tool.factory import FauxArchetypeTool
+try:
+    from Products.ATContentTypes.tool.factory import FauxArchetypeTool
+except ImportError:
+    FauxArchetypeTool = type('FauxArchetypeTool')
 
 def _getToolByName(self, name, default=_marker):
     pass
@@ -72,16 +69,16 @@ def check_getToolByName(obj, name, default=_marker):
     else:
         raise TypeError("Object found is not a portal tool (%s)" % (name,))
     return result
-    """
-    from Products.CMFCore import utils
-    if '_marker' not in utils.getToolByName.func_globals:
-        raise Exception("This Version of Products.CMFPlone is not compatible "
-                        "with Products.PloneHotfix20121106, the fixes are "
-                        "included already in Products.CMFPlone, please remove "
-                        "the hotfix")
-    exec code in utils.getToolByName.func_globals
-    utils._getToolByName.func_code = utils.getToolByName.func_code
-    utils.getToolByName.func_code = utils.check_getToolByName.func_code
+"""
+from Products.CMFCore import utils
+if '_marker' not in utils.getToolByName.func_globals:
+    raise Exception("This Version of Products.CMFPlone is not compatible "
+                    "with Products.PloneHotfix20121106, the fixes are "
+                    "included already in Products.CMFPlone, please remove "
+                    "the hotfix")
+exec code in utils.getToolByName.func_globals
+utils._getToolByName.func_code = utils.getToolByName.func_code
+utils.getToolByName.func_code = utils.check_getToolByName.func_code
 
 # 6. Protect some methods in ZCatalog
 from Products.ZCatalog.ZCatalog import ZCatalog
