@@ -1,7 +1,9 @@
 from zope.i18n import translate
 from zope.publisher.browser import BrowserView
+from zope.component import getUtility
 
 from Products.CMFCore.utils import getToolByName
+from Products.CMFPlone.interfaces import IURLUtility
 from Products.CMFPlone import PloneMessageFactory as _
 
 
@@ -35,7 +37,7 @@ class JSVariables(BrowserView):
         response.setHeader('content-type', 'text/javascript;;charset=utf-8')
 
         props = getToolByName(context, 'portal_properties').site_properties
-        portal_url = getToolByName(context, 'portal_url')()
+        portal_url = getUtility(IURLUtility)()
 
         # the following are flags for mark_special_links.js
         # links get the target="_blank" attribute

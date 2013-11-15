@@ -7,7 +7,7 @@ from App.class_init import InitializeClass
 from posixpath import normpath
 from urlparse import urlparse, urljoin
 import re
-from Products.CMFCore.interfaces import IURLTool
+from Products.CMFPlone.interfaces import IURLUtility
 from zope import interface
 from Products.Five.browser import BrowserView
 import logging;
@@ -22,7 +22,7 @@ logger = logging.getLogger(__name__)
 
 class URLUtility(Implicit):
     """This is the portal_url tool rewrite to be a utility"""
-    interface.implements(IURLTool)
+    interface.implements(IURLUtility)
     security = ClassSecurityInfo()
     security.declarePublic('__call__')
     security.declarePublic('getPortalObject')
@@ -134,7 +134,7 @@ class URLUtility(Implicit):
 
 class URLToolView(BrowserView, URLUtility):
     """Alias to let context/portal_url working"""
-    interface.implements(IURLTool)
+    interface.implements(IURLUtility)
 
     def __init__(self, context, request):
         #TODO: add this as deprecated
@@ -143,7 +143,7 @@ class URLToolView(BrowserView, URLUtility):
         URLUtility.__init__(self)
 
 portal_url = URLUtility()
-registerToolInterface('portal_url', IURLTool)
+registerToolInterface('portal_url', IURLUtility)
 
 InitializeClass(URLUtility)
 

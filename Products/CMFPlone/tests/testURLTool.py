@@ -49,7 +49,7 @@ class TestURLTool(unittest.TestCase):
         self.site.aq_chain = [self.site]
 
     def _makeOne(self, *args, **kw):
-        from Products.CMFPlone.URLTool import URLUtility
+        from Products.CMFPlone.url_utility import URLUtility
         url_tool = URLUtility(*args, **kw)
         return url_tool
 

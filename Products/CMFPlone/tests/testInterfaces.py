@@ -21,7 +21,7 @@ from Products.CMFPlone.QuickInstallerTool import QuickInstallerTool
 from Products.CMFPlone.RegistrationTool import RegistrationTool
 from Products.CMFPlone.SkinsTool import SkinsTool
 from Products.CMFPlone.TypesTool import TypesTool
-from Products.CMFPlone.URLTool import URLUtility
+from Products.CMFPlone.url_utility import URLUtility
 from Products.CMFPlone.WorkflowTool import WorkflowTool
 
 

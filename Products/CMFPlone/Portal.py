@@ -26,7 +26,7 @@ from plone.i18n.locales.interfaces import IMetadataLanguageAvailability
 from zope.interface import implements
 from zope.component import queryUtility
 from zope.component._api import getUtility
-from Products.CMFCore.interfaces import IURLTool
+from Products.CMFPlone.interfaces import IURLUtility
 
 member_indexhtml = """\
 member_search=context.restrictedTraverse('member_search_form')
@@ -164,9 +164,9 @@ class PloneSite(CMFSite, OrderedContainer, BrowserDefaultMixin, UniqueObject):
     security.declareProtected(permissions.View, 'get_portal_url')
     def get_portal_url(self):
         msg = "You should not do context.portal_url,"
-        msg += " please use getUtility(IURLTool)"
+        msg += " please use getUtility(IURLUtility)"
         warn(msg, DeprecationWarning, stacklevel=2)
-        utility = getUtility(IURLTool)
+        utility = getUtility(IURLUtility)
         return utility.__of__(self)
 
     portal_url = ComputedAttribute(get_portal_url, 1)

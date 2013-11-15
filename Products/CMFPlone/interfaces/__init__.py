@@ -19,3 +19,4 @@ from structure import INonStructuralFolder
 from translationservice import ITranslationServiceTool
 from breadcrumbs import IHideFromBreadcrumbs
 from workflow import IWorkflowChain
+from url import IURLUtility

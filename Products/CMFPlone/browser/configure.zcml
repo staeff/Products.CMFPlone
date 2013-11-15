@@ -70,9 +70,9 @@
   <browser:page
       for="*"
       name="portal_url"
-      class="Products.CMFPlone.URLTool.URLToolView"
+      class="Products.CMFPlone.url_utility.URLToolView"
       permission="zope.Public"
-      allowed_interface="Products.CMFCore.interfaces._tools.IURLTool"
+      allowed_interface="Products.CMFPlone.interfaces.IURLUtility"
       />
 
   <browser:page
