@@ -1,3 +1,4 @@
+from warnings import warn
 from ComputedAttribute import ComputedAttribute
 
 from Products.CMFDefault.Portal import CMFSite
@@ -24,6 +25,8 @@ from Products.CMFPlone.interfaces.syndication import ISyndicatable
 from plone.i18n.locales.interfaces import IMetadataLanguageAvailability
 from zope.interface import implements
 from zope.component import queryUtility
+from zope.component._api import getUtility
+from Products.CMFCore.interfaces import IURLTool
 
 member_indexhtml = """\
 member_search=context.restrictedTraverse('member_search_form')
@@ -160,8 +163,11 @@ class PloneSite(CMFSite, OrderedContainer, BrowserDefaultMixin, UniqueObject):
 
     security.declareProtected(permissions.View, 'get_portal_url')
     def get_portal_url(self):
-        #TODO: add deprecation warning
-        return getToolByName(self, 'portal_url')
+        msg = "You should not do context.portal_url,"
+        msg += " please use getUtility(IURLTool)"
+        warn(msg, DeprecationWarning, stacklevel=2)
+        utility = getUtility(IURLTool)
+        return utility.__of__(self)
 
     portal_url = ComputedAttribute(get_portal_url, 1)
 
