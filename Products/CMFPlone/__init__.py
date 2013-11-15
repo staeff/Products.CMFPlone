@@ -128,7 +128,6 @@ def initialize(context):
     import MigrationTool
     import PloneControlPanel
     import WorkflowTool
-    import URLTool
     import RegistrationTool
     import PropertiesTool
     import ActionsTool
@@ -145,7 +144,6 @@ def initialize(context):
              MigrationTool.MigrationTool,
              PloneControlPanel.PloneControlPanel,
              RegistrationTool.RegistrationTool,
-             URLTool.URLTool,
              ActionsTool.ActionsTool,
              TypesTool.TypesTool,
              CatalogTool.CatalogTool,
