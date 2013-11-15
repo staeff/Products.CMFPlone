@@ -140,7 +140,7 @@ class URLToolView(BrowserView, URLUtility):
         #TODO: add this as deprecated
         logger.info('portal_url throw a browser view')
         BrowserView.__init__(self, context, request)
-        URLTool.__init__(self)
+        URLUtility.__init__(self)
 
 portal_url = URLUtility()
 registerToolInterface('portal_url', IURLTool)
