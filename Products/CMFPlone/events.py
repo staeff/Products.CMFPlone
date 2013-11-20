@@ -8,6 +8,8 @@ from zope.component import adapter
 from Products.CMFCore.utils import getToolByName
 from Products.CMFCore.interfaces import IContentish
 
+from Products.CMFPlone.interfaces import IPublishableThroughAcquisition
+
 from interfaces import ISiteManagerCreatedEvent
 from interfaces import IReorderedEvent
 
@@ -46,6 +48,8 @@ def avoid_acquired_content(event):
     request = event.request
     parents = request['PARENTS']
     context = parents[0]
+    if IPublishableThroughAcquisition.providedBy(context):
+        return
     if IContentish.providedBy(context):
         parent_ids = [item.getId() for item in parents]
         parent_ids.reverse()
