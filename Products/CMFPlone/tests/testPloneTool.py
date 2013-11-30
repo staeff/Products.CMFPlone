@@ -1,11 +1,17 @@
+# -*- coding: utf-8 -*-
 from Acquisition import Implicit
 from plone.app.testing import SITE_OWNER_NAME
+from plone.registry.interfaces import IRegistry
 from Products.CMFCore.utils import getToolByName
 from Products.CMFPlone.interfaces import IReorderedEvent
+from Products.CMFPlone.PropertiesTool import SimpleItemWithProperties
 from Products.CMFPlone.tests import PloneTestCase
 from Products.CMFPlone.tests import dummy
 from zope.component import getGlobalSiteManager
+from zope.component import getUtility
 from zope.interface import Interface
+
+import datetime
 
 default_user = PloneTestCase.default_user
 portal_name = PloneTestCase.portal_name
@@ -672,3 +678,41 @@ class TestIDGenerationMethods(PloneTestCase.PloneTestCase):
         self.assertEqual(len(expectedAliases), len(aliases))
         for k, v in aliases.items():
             self.assertEqual(expectedAliases[k], v)
+
+
+class TestPropertiesTool(PloneTestCase.PloneTestCase):
+
+   def test_property_migration(self):
+       properties = getToolByName(self.portal, 'portal_properties')
+
+       prop2regmap = {
+	    'boolean': True,
+	    'date': '2013-11-11',
+	    'float': 5.6,
+	    'int': 6789,
+	    'lines': ('München', 'Bristol'),
+	    'long': 9234234,
+	    'string': 'Köln',
+	    'text': 'Österreich\nAustralia',
+	    'tokens': ('foo', 'bär'),
+	    }
+
+       expected = {
+	    'date': datetime.datetime(2013, 11, 11, 0, 0),
+	    'lines': (u'München', u'Bristol'),
+	    'string': u'Köln',
+	    'text': u'Österreich\nAustralia',
+	    'tokens': (u'foo', u'bär'),
+            }
+
+
+       properties['test_properties'] = SimpleItemWithProperties('test_properties', 'Test Properties')
+       # use sorted here because we need to make sure 'lines' is before
+       # 'selection' and 'multiple selection'
+       for ptype in sorted(prop2regmap.keys()):
+           properties['test_properties']._setProperty(ptype.replace(' ', '_'), prop2regmap[ptype], ptype)
+           
+       properties.migrate()
+       registry = getUtility(IRegistry)
+       for ptype, pvalue in prop2regmap.items():
+           self.assertEqual(registry['plone.test_properties.%s' % ptype.replace(' ', '_')], expected.get(ptype, pvalue))
