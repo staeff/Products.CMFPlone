@@ -5,6 +5,7 @@
            xmlns:i18n="http://namespaces.zope.org/i18n"
            i18n_domain="plone">
 
+  <include package="five.pt" />
   <include package="zope.app.locales" />
   <include package="Products.CMFCore" />
   <include package="Products.GenericSetup" />
@@ -27,6 +28,7 @@
   <include package="plone.app.redirector" />
   <include package="plone.app.search" />
   <include package="plone.app.registry" />
+  <include package="plone.app.theming" />
   <include zcml:condition="installed plone.app.upgrade" package="plone.app.upgrade" />
   <include package="plone.app.users" />
   <include package="plone.app.uuid" />
@@ -103,5 +105,17 @@
 
   <subscriber for="Products.GenericSetup.events.ProfileImportedEvent"
               handler=".events.profileImportedEventHandler"/>
+
+  <!-- configure sizes lookup for `plone.namedfile` -->
+  <utility
+      component=".utils.getAllowedSizes"
+      provides="plone.namedfile.interfaces.IAvailableSizes"
+      />
+
+  <!-- quality lookup for IScaledImageQuality -->
+  <utility
+      component=".utils.getQuality"
+      provides="plone.scale.interfaces.IScaledImageQuality"
+      />
 
 </configure>

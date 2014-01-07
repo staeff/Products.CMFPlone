@@ -2,7 +2,6 @@
 <object name="portal_javascripts" meta_type="JavaScripts Registry">
 
  <javascript id="jquery-integration.js" enabled="False" />
- <javascript id="event-registration.js" enabled="False" />
  <javascript id="register_function.js" />
  <javascript id="plone_javascript_variables.js" />
  <javascript id="nodeutilities.js" />
@@ -28,7 +27,6 @@
 
  <!-- Only for logged-in users -->
  <javascript id="table_sorter.js" authenticated="True" />
- <javascript id="calendar_formfield.js" authenticated="True" />
  <javascript id="formUnload.js" authenticated="True" />
  <javascript id="formsubmithelpers.js" authenticated="True" />
  <javascript id="unlockOnFormUnload.js" authenticated="True" />

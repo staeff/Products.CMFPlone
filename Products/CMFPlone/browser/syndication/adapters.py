@@ -151,7 +151,7 @@ class FolderFeed(BaseFeedData):
 
     @property
     def items(self):
-        for item in self._items():
+        for item in self._items()[:self.limit]:
             # look for custom adapter
             # otherwise, just use default
             adapter = queryMultiAdapter((item, self), IFeedItem)
@@ -266,7 +266,10 @@ class DexterityItem(BaseItem):
     def __init__(self, context, feed):
         super(DexterityItem, self).__init__(context, feed)
         self.dexterity = IDexterityContent.providedBy(context)
-        self.primary = IPrimaryFieldInfo(self.context, None)
+        try:
+            self.primary = IPrimaryFieldInfo(self.context, None)
+        except TypeError:
+            self.primary = None
 
     @property
     def file_url(self):

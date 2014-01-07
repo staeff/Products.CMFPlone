@@ -24,11 +24,10 @@ from App.Common import package_home
 from App.ImageFile import ImageFile
 from DateTime import DateTime
 from DateTime.interfaces import DateTimeError
-from Products.CMFCore.permissions import SetOwnProperties
+from Products.CMFCore.interfaces import IPropertiesTool
 from Products.CMFCore.permissions import ManageUsers
 from Products.CMFCore.utils import ToolInit as CMFCoreToolInit
 from Products.CMFCore.utils import getToolByName
-from Products.PlonePAS.interfaces.plugins import IUserManagement
 
 import transaction
 
@@ -50,6 +49,10 @@ PACKAGE_HOME = package_home(globals())
 security.declarePrivate('PACKAGE_HOME')
 WWW_DIR = join(PACKAGE_HOME, 'www')
 security.declarePrivate('WWW_DIR')
+
+# image-scaling
+QUALITY_DEFAULT = 88
+pattern = re.compile(r'^(.*)\s+(\d+)\s*:\s*(\d+)$')
 
 # Log methods
 from log import log
@@ -654,38 +657,48 @@ def isLinked(obj):
 def set_own_login_name(member, loginname):
     """Allow the user to set his/her own login name.
 
-    PLIP9214 Does someone know a better spot to put this function?  It
-    could be added to Products.CMFCore.MemberDataTool.MemberData.
+    If you have the Manage Users permission, you can update the login
+    name of another member too, though the name of this function is a
+    bit weird then.  Historical accident.
     """
-    if member.getUserName() == loginname:
-        # Bail out early as there is nothing to do.  Also this avoids
-        # an Unauthorized error when this is a member that has just
-        # been registered.
+    pas = getToolByName(member, 'acl_users')
+    mt = getToolByName(member, 'portal_membership')
+    if member.getId() == mt.getAuthenticatedMember().getId():
+        pas.updateOwnLoginName(loginname)
         return
     secman = getSecurityManager()
-    if not secman.checkPermission(SetOwnProperties, member):
-        raise Unauthorized('You are not allowed to update this login name')
-    membership = getToolByName(member, 'portal_membership')
-    if member != membership.getAuthenticatedMember() \
-        and not secman.checkPermission(ManageUsers, member):
+    if not secman.checkPermission(ManageUsers, member):
         raise Unauthorized('You can only change your OWN login name.')
-    acl_users = getToolByName(member, 'acl_users')
-    for plugin_id, userfolder in acl_users.plugins.listPlugins(IUserManagement):
-        if not hasattr(userfolder, 'updateUser'):
-            continue
-        try:
-            userfolder.updateUser(member.id, loginname)
-        except KeyError:
-            continue
-        else:
-            return
-    # PLIP9214: For a user in the zope root we could do something like this:
-    # userfolder = member.getUser().__parent__.users
-    # userfolder.updateUser(member.id, loginname)
-    # But it is probably best not to touch root zope users.
-    message = ('You are not a Plone member. You are probably '
-               'registered on the root user folder. Please '
-               'notify an administrator if this is unexpected.')
-    log(message,
-        summary='Could not update login name of user %s.' % member.id)
-    raise KeyError(message)
+    pas.updateLoginName(member.getId(), loginname)
+
+
+def getAllowedSizes():
+    """Get image-scale sizes.
+    """
+    ptool = queryUtility(IPropertiesTool)
+    if ptool is None:
+        return None
+    props = getattr(ptool, 'imaging_properties', None)
+    if props is None:
+        return None
+    sizes = {}
+    for line in props.getProperty('allowed_sizes'):
+        line = line.strip()
+        if line:
+            name, width, height = pattern.match(line).groups()
+            name = name.strip().replace(' ', '_')
+            sizes[name] = int(width), int(height)
+    return sizes
+
+
+def getQuality():
+    """Get quality used in image-scaling
+    """
+    ptool = queryUtility(IPropertiesTool)
+    if ptool:
+        props = getattr(ptool, 'imaging_properties', None)
+        if props:
+            quality = props.getProperty('quality')
+            if quality:
+                return quality
+    return QUALITY_DEFAULT
