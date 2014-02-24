@@ -19,6 +19,19 @@ If you want to change the settings, just change the attribute::
   >>> search_settings.enable_livesearch = False
 
 
+Editing Control Panel
+---------------------
+
+  >>> from Products.CMFPlone.interfaces import IEditingSchema
+  >>> editing_settings = registry.forInterface(IEditingSchema, prefix='plone')
+
+  >>> editing_settings.visible_ids = True
+  >>> editing_settings.default_editor = 'TinyMCE'
+  >>> editing_settings.ext_editor = True
+  >>> editing_settings.enable_link_integrity_checks = True
+  >>> editing_settings.lock_on_ttw_edit = True
+
+
 Search Control Panel
 --------------------
 

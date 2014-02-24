@@ -3,6 +3,7 @@ from properties import ISimpleItemWithProperties
 from basetool import IPloneBaseTool
 from basetool import IPloneTool
 from basetool import IPloneCatalogTool
+from controlpanel import IEditingSchema
 from controlpanel import IControlPanel
 from controlpanel import ISearchSchema
 from controlpanel import ISiteSchema
