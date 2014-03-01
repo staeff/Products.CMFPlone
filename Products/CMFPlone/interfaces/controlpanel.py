@@ -30,6 +30,57 @@ class IControlPanel(IPloneBaseTool):
             calling .getAction() on each of them """
 
 
+class ISecuritySchema(Interface):
+
+    enable_self_reg = schema.Bool(
+        title=_(u'Enable self-registration'),
+        description=_(
+            u"Allows users to register themselves on the site. If "
+            u"not selected, only site managers can add new users."),
+        default=False,
+        required=False)
+
+    enable_user_pwd_choice = schema.Bool(
+        title=_(u'Let users select their own passwords'),
+        description=_(
+            u"If not selected, a URL will be generated and "
+            u"e-mailed. Users are instructed to follow the link to "
+            u"reach a page where they can change their password and "
+            u"complete the registration process; this also verifies "
+            u"that they have entered a valid email address."),
+        default=False,
+        required=False)
+
+    enable_user_folders = schema.Bool(
+        title=_(u'Enable User Folders'),
+        description=_(
+            u"If selected, home folders where users can create "
+            u"content will be created when they log in."),
+        default=False,
+        required=False)
+
+    allow_anon_views_about = schema.Bool(
+        title=_(u"Allow anyone to view 'about' information"),
+        description=_(
+            u"If not selected only logged-in users will be able to "
+            u"view information about who created an item and when it "
+            u"was modified."),
+        default=False,
+        required=False)
+
+    use_email_as_login = schema.Bool(
+        title=_(u'Use email address as login name'),
+        description=_(
+            u"Allows new  users to login with their email address "
+            u"instead of specifying a separate login name. (Existing "
+            u"users must go to the @@personal-information page once "
+            u"and save it before this setting has effect for them. "
+            u"Or use the @@migrate-to-emaillogin page as a site "
+            u"admin)"),
+        default=False,
+        required=False)
+
+
 class ISearchSchema(Interface):
 
     enable_livesearch = schema.Bool(
@@ -114,3 +165,32 @@ class ISiteSchema(ILockSettings):
             u"entered near the end of the page."),
         default=u'',
         required=False)
+
+
+class IUserGroupsSettingsSchema(Interface):
+
+    many_groups = schema.Bool(
+        title=_(u'Many groups?'),
+        description=_(
+            u"Determines if your Plone is optimized "
+            u"for small or large sites. In environments with a "
+            u"lot of groups it can be very slow or impossible "
+            u"to build a list all groups. This option tunes the "
+            u"user interface and behaviour of Plone for this "
+            u"case by allowing you to search for groups instead "
+            u"of listing all of them."),
+        default=False
+    )
+
+    many_users = schema.Bool(
+        title=_(u'Many users?'),
+        description=_(
+            u"Determines if your Plone is optimized "
+            u"for small or large sites. In environments with a "
+            u"lot of users it can be very slow or impossible to "
+            u"build a list all users. This option tunes the user "
+            u"interface and behaviour of Plone for this case by "
+            u"allowing you to search for users instead of "
+            u"listing all of them."),
+        default=False
+    )
