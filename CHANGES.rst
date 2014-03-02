@@ -8,6 +8,40 @@ Changelog
 5.0a1 (unreleased)
 ------------------
 
+- Add 'warning' and 'error' status message types to the test_rendering
+  view.
+  [esteele]
+
+- Update the front-page links.
+  [esteele]
+
+- In plone-overview view, we can now see Plone sites which are contained into
+  Zope folder.
+  [bsuttor]
+
+- Make Plone tool read the exposeDCMetaTags from p.a.registry instead of
+  of the site properties.
+  [timo]
+
+- Hide plone.app.registry install profile in the add-ons control panel.
+  [esteele]
+
+- Removed spamProtect.py script, since it doesn't offer real protection.
+  [davisagli]
+
+- Moved the member search form to plone.app.users
+  [pabo3000]
+
+- PLIP #13705: Remove <base> tag.
+  [frapell]
+
+- merge hotfixes from 20131210
+  [vangheem]
+
+- handle plone.app.textfield RichTextValue objects in syndication. Should
+  fix syndication with plone.app.contenttypes.
+  [vangheem]
+
 - FolderFeed adapter now takes into account the limit property when displaying
   the RSS feed just like the other adapters do
   [ichim-david]

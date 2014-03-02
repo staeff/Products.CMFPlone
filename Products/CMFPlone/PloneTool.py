@@ -5,7 +5,10 @@ from types import UnicodeType, StringType
 import urlparse
 import transaction
 
+from plone.registry.interfaces import IRegistry
+
 from zope.component import queryAdapter
+from zope.component import getUtility
 from zope.deprecation import deprecate
 from zope.interface import implements
 from zope.event import notify
@@ -32,6 +35,7 @@ from Products.CMFCore.interfaces import IDublinCore, IMutableDublinCore
 from Products.CMFCore.WorkflowCore import WorkflowException
 from Products.CMFDefault.DublinCore import DefaultDublinCoreImpl
 from Products.CMFDynamicViewFTI.interfaces import IBrowserDefault
+from Products.CMFPlone.interfaces import ISiteSchema
 from Products.CMFPlone.events import ReorderedEvent
 from Products.CMFPlone.interfaces import IPloneTool
 from Products.CMFPlone.interfaces import INonStructuralFolder
@@ -990,7 +994,9 @@ class PloneTool(PloneBaseTool, UniqueObject, SimpleItem):
         site_props = getToolByName(self, 'portal_properties').site_properties
         mt = getToolByName(self, 'portal_membership')
 
-        use_all = site_props.getProperty('exposeDCMetaTags', None)
+        registry = getUtility(IRegistry)
+        settings = registry.forInterface(ISiteSchema, prefix="plone")
+        use_all = settings.exposeDCMetaTags
         view_about = site_props.getProperty('allowAnonymousViewAbout', False) \
                      or not mt.isAnonymousUser()
 
@@ -1119,7 +1125,7 @@ class PloneTool(PloneBaseTool, UniqueObject, SimpleItem):
 
     security.declarePublic('reindexOnReorder')
     def reindexOnReorder(self, parent):
-        """ reindexing of "gopip" isn't needed any longer, 
+        """ reindexing of "gopip" isn't needed any longer,
         but some extensions might need the info anyway :("""
         notify(ReorderedEvent(parent))
 

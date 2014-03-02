@@ -24,8 +24,6 @@ class HiddenProducts(object):
     def getNonInstallableProducts(self):
         return [
             'Archetypes', 'Products.Archetypes',
-            'ATReferenceBrowserWidget', 'Products.ATReferenceBrowserWidget',
-            'archetypes.referencebrowserwidget',
             'CMFDefault', 'Products.CMFDefault',
             'CMFPlone', 'Products.CMFPlone', 'Products.CMFPlone.migrations',
             'CMFTopic', 'Products.CMFTopic',
@@ -35,7 +33,6 @@ class HiddenProducts(object):
             'PlonePAS', 'Products.PlonePAS',
             'wicked.at',
             'PloneLanguageTool', 'Products.PloneLanguageTool',
-            'TinyMCE', 'Products.TinyMCE',
             'CMFFormController', 'Products.CMFFormController',
             'MimetypesRegistry', 'Products.MimetypesRegistry',
             'PortalTransforms', 'Products.PortalTransforms',
@@ -46,6 +43,7 @@ class HiddenProducts(object):
             'plone.portlet.collection',
             'borg.localrole',
             'plone.keyring',
+            'plone.outputfilters',
             'plone.protect',
             'plone.app.jquery'
             'plone.app.jquerytools',
@@ -53,7 +51,6 @@ class HiddenProducts(object):
             'plone.app.discussion',
             'plone.app.folder',
             'plone.app.imaging',
-            'plone.outputfilters',
             'plone.app.registry',
             'plone.app.search',
             'plone.app.z3cform',
