@@ -185,12 +185,6 @@ class TestPortalCreation(PloneTestCase.PloneTestCase, WarningInterceptor):
         action = self.actions.getActionInfo('document_actions/full_screen')
         self.assertTrue('fullscreenexpand_icon' in action['icon'])
 
-    def testVisibleIdsProperties(self):
-        # visible_ids should be a site property and a memberdata property
-        self.assertTrue(
-            self.properties.site_properties.hasProperty('visible_ids'))
-        self.assertTrue(self.memberdata.hasProperty('visible_ids'))
-
     def testFormToolTipsProperty(self):
         # formtooltips should have been removed
         self.assertFalse(self.memberdata.hasProperty('formtooltips'))
@@ -396,10 +390,6 @@ class TestPortalCreation(PloneTestCase.PloneTestCase, WarningInterceptor):
     def testHome_PageMemberdataProperty(self):
         # portal_memberdata should have a home_page property
         self.assertTrue(self.memberdata.hasProperty('home_page'))
-
-    def testExtEditorMemberdataProperty(self):
-        # portal_memberdata should have a location property
-        self.assertEqual(self.memberdata.getProperty('ext_editor'), 0)
 
     def testChangeStateIsLastFolderButton(self):
         # Change state button should be the last

@@ -73,7 +73,6 @@
   <property name="typesLinkToFolderContentsInFC" type="lines">
    <element value="Folder"/>
   </property>
-  <property name="visible_ids" type="boolean">False</property>
   <property name="exposeDCMetaTags" type="boolean">False</property>
   <property name="types_not_searched" type="lines">
    <element value="ATBooleanCriterion"/>

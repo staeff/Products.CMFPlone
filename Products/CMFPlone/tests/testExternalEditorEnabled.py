@@ -12,8 +12,7 @@ class TestExternalEditorEnabled(PloneTestCase.PloneTestCase):
         self.folder = self.folder.folder2
         self.portal.acl_users._doAddUser('user1', 'secret', ['Member'], [])
         self.mtool = self.portal.portal_membership
-        member = self.mtool.getAuthenticatedMember()
-        member.setMemberProperties({'ext_editor': 1})
+        self.portal.portal_properties.site_properties.ext_editor = True
 
         self.lockbody = ('<?xml version="1.0" encoding="utf-8"?>\n'
                 '<d:lockinfo xmlns:d="DAV:">\n'
@@ -31,10 +30,8 @@ class TestExternalEditorEnabled(PloneTestCase.PloneTestCase):
         self.logout()
         self.assertFalse(self.doc.externalEditorEnabled())
 
-    def testFailOnDisabledMemberProperty(self):
-        self.assertTrue(self.doc.externalEditorEnabled())
-        member = self.mtool.getAuthenticatedMember()
-        member.setMemberProperties({'ext_editor': 0})
+    def testFailWithoutSitePropertyEnabled(self):
+        self.portal.portal_properties.site_properties.ext_editor = False
         self.assertFalse(self.doc.externalEditorEnabled())
 
     def testFailOnUnSupportedObjects(self):

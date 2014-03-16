@@ -21,10 +21,9 @@ portal_factory = getToolByName(portal, 'portal_factory', None)
 if portal_factory and portal_factory.isTemporary(context):
     return False
 
-# Check if the member property
-member = mtool.getAuthenticatedMember()
-if not member.getProperty('ext_editor', False):
-    return False
+portal_properties = getToolByName(portal, 'portal_properties')
+if not portal_properties.site_properties.getProperty('ext_editor', False):
+	return False
 
 if not webdav_enabled(context, container):
     return False
