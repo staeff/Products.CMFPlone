@@ -7,11 +7,13 @@ Changelog
 
 5.0a3 (unreleased)
 ------------------
-- remove BBB code-patches for securemailhost. warn explicit if DateTime.ISO
-  is called. Remove CMF 2.3 compat. Adresses issue #109.
+
+- Remove BBB code-patches for securemailhost (also from test mock). Warn 
+  explicit if DateTime.ISO is called. Remove CMF 2.3 compat. Adresses 
+  issue #109.
   [jensens]
 
-- type controlpanel: Resolved problem with workflow selection form as it 
+- Type controlpanel: Resolved problem with workflow selection form as it 
   was breaking if state title had non-ascii characters. see also 
   https://github.com/plone/plone.app.controlpanel/pull/26
   [lewicki, jensens]
