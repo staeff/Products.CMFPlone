@@ -775,6 +775,24 @@
       <value key="js">++resource++mockup/texteditor/pattern.js</value>
   </records>
 
+  <records prefix="plone.resources/mockup-patterns-filemanager"
+            interface='Products.CMFPlone.interfaces.IResourceRegistry'>
+      <value key="js">++resource++mockup/filemanager/pattern.js</value>
+      <value key="url">++resource++mockup/filemanager</value>
+      <value key="css">
+        <element>++resource++mockup/filemanager/pattern.filemanager.less</element>
+      </value>
+  </records>
+
+  <records prefix="plone.resources/mockup-patterns-thememapper"
+            interface='Products.CMFPlone.interfaces.IResourceRegistry'>
+      <value key="js">++resource++mockup/thememapper/pattern.js</value>
+      <value key="url">++resource++mockup/thememapper</value>
+      <value key="css">
+        <element>++resource++mockup/thememapper/pattern.thememapper.less</element>
+      </value>
+  </records>
+
   <!-- ace resources -->
   <records prefix="plone.resources/ace"
             interface='Products.CMFPlone.interfaces.IResourceRegistry'>
@@ -912,6 +930,17 @@
       <value key="deps">jquery</value>
   </records>
 
+  <!-- Theme mapper bundle resources -->
+
+  <records prefix="plone.resources/thememapper"
+            interface='Products.CMFPlone.interfaces.IResourceRegistry'>
+      <value key="js">++plone++static/thememapper.js</value>
+      <value key="css">
+        <element>++plone++static/thememapper.less</element>
+      </value>
+      <value key="deps">jquery</value>
+  </records>
+
   <!-- Bundles -->
 
   <records prefix="plone.bundles/plone"
@@ -955,4 +984,15 @@
     </value>
   </record>
 
+  <records prefix="plone.bundles/themeeditor"
+            interface='Products.CMFPlone.interfaces.IBundleRegistry'>
+    <value key="resources">
+      <element>thememapper</element>
+    </value>
+    <value key="enabled">True</value>
+    <value key="jscompilation">++plone++static/themeeditor.js</value>
+    <value key="csscompilation">++plone++static/themeeditor.css</value>
+    <value key="last_compilation">2014-08-14 00:00:00</value>
+  </records>
+  
 </registry>
