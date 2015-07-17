@@ -8,6 +8,10 @@ Changelog
 5.0b4 (unreleased)
 ------------------
 
+- remove Products.CMFPlone.utils.isLinked function. Switch to using
+  plone.app.linkintegrity's variant
+  [vangheem]
+
 - move Plone specific ``getDefaultPage`` (magic) code from plone.app.layout
   over to Products.CMFPlone. This avoids a circular dependency. Also its
   not really layout only related code.
